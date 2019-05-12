@@ -1,7 +1,7 @@
 import {ClientBase} from "./ClientBase";
 import {IHeaders, IRequestHandler, IRequestOptions} from "typed-rest-client/Interfaces";
 import {RestClient} from "typed-rest-client/RestClient";
-import {ArtifactResponse,JsonPatchOperation, Operation, RequestBody} from "../Interfaces/ArtifactInterfaces";
+import {ArtifactResponse, Operation, RequestBody} from "../Interfaces/ArtifactInterfaces";
 import {PackageDetails} from "../Interfaces/PackageDetails";
 import {HttpClient} from "typed-rest-client/HttpClient";
 
