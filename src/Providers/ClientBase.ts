@@ -7,10 +7,6 @@ import {getHandlerFromToken} from "azure-devops-node-api";
 
 export interface IClientBase
 {
-    createAcceptHeader(
-        type: string,
-        apiVersion?: string): string;
-
     createRequestOptions(
         type: string,
         apiVersion?: string): IRequestOptions;
@@ -28,12 +24,6 @@ export class ClientBase implements IClientBase
     public readonly OrganizationName:string;
     constructor() {
         this.OrganizationName = AzureService.getOrganizationName();
-    }
-
-    public createAcceptHeader(
-        type: string,
-        apiVersion?: string): string {
-        return type + (apiVersion ? (';api-version=' + apiVersion) : '');
     }
 
     public createRequestOptions(
@@ -117,6 +107,10 @@ export class ClientBase implements IClientBase
             }
         });
     }
+
+    static createAcceptHeader = (
+        type: string,
+        apiVersion?: string): string => type + (apiVersion ? (';api-version=' + apiVersion) : '');
 
     static createHandlers = () => [getHandlerFromToken(ClientBase.getAuthToken())];
 
