@@ -79,8 +79,8 @@ export class ArtifactApi extends ClientBase implements IArtifactApi
         return packageResponse.result;
     }
 
-    static createAddRequestBody = (viewId: string): RequestBody =>
-    {        
+    static createAddRequestBody (viewId: string): RequestBody
+    {
         return {
             views:{
                 op: Operation.add,
