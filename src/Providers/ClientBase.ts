@@ -11,9 +11,6 @@ export interface IClientBase
         type: string,
         apiVersion?: string): IRequestOptions;
 
-    createRequestHeaders(
-        apiVersion?: string):IHeaders;
-
     processResponse<T>(
         res: HttpClientResponse,
         options: RestClientIRequestOptions): Promise<IRestResponse<T>>
@@ -32,15 +29,6 @@ export class ClientBase implements IClientBase
         options.allowRedirects = true;
         options.headers = this.createRequestHeaders(apiVersion);
         return options;
-    }
-
-    public createRequestHeaders(
-        apiVersion?: string):IHeaders
-    {
-        return {
-            accept: this.createAcceptHeader('application/json', apiVersion),
-            ["Content-Type"] : "application/json"
-        };
     }
 
     public async processResponse<T>(
@@ -106,6 +94,15 @@ export class ClientBase implements IClientBase
                 resolve(response);
             }
         });
+    }
+
+    static createRequestHeaders(
+        apiVersion?: string):IHeaders
+    {
+        return {
+            accept: ClientBase.createAcceptHeader('application/json', apiVersion),
+            ["Content-Type"] : "application/json"
+        };
     }
 
     static createAcceptHeader = (
