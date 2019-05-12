@@ -55,19 +55,6 @@ export class ClientBase implements IClientBase
         };
     }
 
-    public dateTimeDeserializer(
-        key: any,
-        value: any): any {
-        if (typeof value === 'string'){
-            let a = new Date(value);
-            if (!isNaN(a.valueOf())) {
-                return a;
-            }
-        }
-
-        return value;
-    }
-
     public async processResponse<T>(
         res: HttpClientResponse,
         options: RestClientIRequestOptions): Promise<IRestResponse<T>> {
@@ -142,5 +129,16 @@ export class ClientBase implements IClientBase
             return auth.parameters['AccessToken'];
         }
         throw new Error("SYSTEMVSSCONNECTION is not valid");
+    }
+
+    static dateTimeDeserializer(
+        key: any,
+        value: any): any {
+        if (typeof value === 'string'){
+            let a = new Date(value);
+            if (!isNaN(a.valueOf())) return a;
+        }
+
+        return value;
     }
 }
