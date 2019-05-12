@@ -7,10 +7,6 @@ import {getHandlerFromToken} from "azure-devops-node-api";
 
 export interface IClientBase
 {
-    createRequestOptions(
-        type: string,
-        apiVersion?: string): IRequestOptions;
-
     processResponse<T>(
         res: HttpClientResponse,
         options: RestClientIRequestOptions): Promise<IRestResponse<T>>
@@ -21,14 +17,6 @@ export class ClientBase implements IClientBase
     public readonly OrganizationName:string;
     constructor() {
         this.OrganizationName = AzureService.getOrganizationName();
-    }
-
-    public createRequestOptions(
-        apiVersion?: string):IRequestOptions {
-        let options: IRequestOptions = {} as IRequestOptions;
-        options.allowRedirects = true;
-        options.headers = this.createRequestHeaders(apiVersion);
-        return options;
     }
 
     public async processResponse<T>(
@@ -103,6 +91,14 @@ export class ClientBase implements IClientBase
             accept: ClientBase.createAcceptHeader('application/json', apiVersion),
             ["Content-Type"] : "application/json"
         };
+    }
+
+    static createRequestOptions(
+        apiVersion?: string):IRequestOptions {
+        let options: IRequestOptions = {} as IRequestOptions;
+        options.allowRedirects = true;
+        options.headers = ClientBase.createRequestHeaders(apiVersion);
+        return options;
     }
 
     static createAcceptHeader = (

@@ -29,8 +29,8 @@ export class ArtifactApi extends ClientBase implements IArtifactApi
     {
         const apiVersion = "5.0-preview.1";
 
-        const options:IRequestOptions = this.createRequestOptions(apiVersion);
-        const handlers:IRequestHandler[] = this.createHandlers();
+        const options:IRequestOptions = ClientBase.createRequestOptions(apiVersion);
+        const handlers:IRequestHandler[] = ClientBase.createHandlers();
 
         const restClient = new RestClient(
             "haplo-promote",
@@ -53,9 +53,9 @@ export class ArtifactApi extends ClientBase implements IArtifactApi
     {   
         const apiVersion = "5.0-preview.1";
 
-        const options: IHeaders = this.createRequestOptions(apiVersion);
+        const options: IHeaders = ClientBase.createRequestOptions(apiVersion);
 
-        const handlers: IRequestHandler[] = this.createHandlers();
+        const handlers: IRequestHandler[] = ClientBase.createHandlers();
 
         const httpClient = new HttpClient(
             "haplo-promote",
@@ -64,7 +64,7 @@ export class ArtifactApi extends ClientBase implements IArtifactApi
 
         const requestData = ArtifactApi.createAddRequestBody(viewId);
 
-        const headers = this.createRequestHeaders(apiVersion);
+        const headers = ClientBase.createRequestHeaders(apiVersion);
 
         const response = await httpClient.patch(
             `https://pkgs.dev.azure.com/${this.OrganizationName}/_apis/packaging/feeds/${feedId}/${protocolType}/packages/${packageDetails.name}/versions/${packageDetails.version}?api-version=${apiVersion}`,

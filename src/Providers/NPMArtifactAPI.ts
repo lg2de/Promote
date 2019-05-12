@@ -23,9 +23,9 @@ export class NpmArtifactApi extends ClientBase implements INpmArtifactApi
     {
         const apiVersion = "5.0-preview.1";
 
-        const options: IHeaders = this.createRequestOptions(apiVersion);
+        const options: IHeaders = ClientBase.createRequestOptions(apiVersion);
 
-        const handlers: IRequestHandler[] = this.createHandlers();
+        const handlers: IRequestHandler[] = ClientBase.createHandlers();
 
         const httpClient = new HttpClient(
             "haplo-promote",
@@ -34,7 +34,7 @@ export class NpmArtifactApi extends ClientBase implements INpmArtifactApi
 
         const requestData = ArtifactApi.createAddRequestBody(viewId);
 
-        const headers = this.createRequestHeaders(apiVersion);
+        const headers = ClientBase.createRequestHeaders(apiVersion);
 
         const response = await httpClient.patch(
             `https://pkgs.dev.azure.com/${this.OrganizationName}/_apis/packaging/feeds/${feedId}/${protocolType}/${packageDetails.name}/versions/${packageDetails.version}?api-version=${apiVersion}`,
