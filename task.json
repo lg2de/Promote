@@ -24,11 +24,6 @@
             "name": "general",
             "displayName": "General",
             "isExpanded": true
-        },
-        {
-            "name": "debug",
-            "displayName": "Debug",
-            "isExpanded": false
         }
     ],
     "inputs": [
