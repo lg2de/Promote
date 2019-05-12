@@ -15,8 +15,6 @@ export interface IClientBase
         type: string,
         apiVersion?: string): IRequestOptions;
 
-    createHandlers(): IRequestHandler[];
-
     createRequestHeaders(
         apiVersion?: string):IHeaders;
 
@@ -120,10 +118,9 @@ export class ClientBase implements IClientBase
         });
     }
 
+    static createHandlers = () => [getHandlerFromToken(ClientBase.getAuthToken())];
 
-    public createHandlers = () => [getHandlerFromToken(this.getAuthToken())];
-
-    private getAuthToken():string{
+    static getAuthToken():string{
         let auth = getEndpointAuthorization('SYSTEMVSSCONNECTION', false);
         if (auth && auth.scheme === 'OAuth') {
             return auth.parameters['AccessToken'];
