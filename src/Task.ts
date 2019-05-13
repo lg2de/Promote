@@ -25,19 +25,29 @@ async function run() {
         if(!PackageService.isFeedTypeSupported(feedType))
             throw new Error("Feed type:" +feedType+" is not supported");
 
-        let foundPackagePath: string = AzureService.expandPackageWildcardPatterns(packagePath);
+        const foundPackagePaths: string[] = AzureService.expandPackageWildcardPatterns(packagePath);
 
-        let packageDetails = packageService.getPackageDetailsFromPath(
-            foundPackagePath,
-            feedType);
+        for (let i = 0; i < foundPackagePaths.length; i++) {
+            try {
+                tl.debug("Task.run - Found package path:" + foundPackagePaths[i] + " " + i + "/" + foundPackagePaths.length+ " packages to promote");
 
-        await packageService.promote(
-            feedId,
-            viewId,
-            packageDetails,
-            feedType);
+                let packageDetails = packageService.getPackageDetailsFromPath(
+                    foundPackagePaths[i],
+                    feedType);
+                tl.debug("Task.run - Details for:"+foundPackagePaths[i] + JSON.stringify(packageDetails));
 
-        console.log("Successfully promoted packaged");
+                await packageService.promote(
+                    feedId,
+                    viewId,
+                    packageDetails,
+                    feedType);
+                console.log("Task.run - Successfully promoted packaged: " + packageDetails.name);
+            }
+            catch (error)
+            {
+                tl.error("Error occurred while promoting '"+ foundPackagePaths[i] +"' error message:"+error.message)
+            }
+        }
     }
     catch (error)
     {
