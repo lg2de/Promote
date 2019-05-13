@@ -6,15 +6,18 @@ async function run() {
         let feedId: string = tl.getInput(
             "feed",
             true);
+        tl.debug("Task.run - Feed id:" + feedId);
 
         let viewId: string = tl.getInput(
             "view",
             true);
+        tl.debug("Task.run - View id:" + viewId);
 
         let packagePath: string = tl.getPathInput(
             "package",
             true,
             false);
+        tl.debug("Task.run - Package path:" + packagePath);
 
         let packageService = new PackageService();
         let feedType = await packageService.getPackageProtocolType(feedId);
